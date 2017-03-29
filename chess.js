@@ -189,12 +189,17 @@ var Chess = function(fen) {
     load(DEFAULT_POSITION);
   }
 
-  function load(fen) {
+  /**
+   *  @bughouse-chess: added 'force' option to force the load of positions
+   *   that are invalid in a normal game of chess, but are valid in
+   *   bughouse (e.g. 9 pawns on the board)
+   */
+  function load(fen, options) {
     var tokens = fen.split(/\s+/);
     var position = tokens[0];
     var square = 0;
 
-    if (!validate_fen(fen).valid) {
+    if (!validate_fen(fen).valid && !(options && options.force)) {
       return false;
     }
 
